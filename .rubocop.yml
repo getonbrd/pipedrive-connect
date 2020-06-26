@@ -1,0 +1,68 @@
+AllCops:
+  NewCops: enable
+
+  DisplayCopNames: true
+  TargetRubyVersion: 2.6
+
+Metrics/BlockLength:
+  Max: 40
+  Exclude:
+    # `context` in tests are blocks and get quite large, so exclude the test
+    # directory from having to adhere to this rule.
+    - "spec/**/*.rb"
+
+Metrics/ClassLength:
+  Max: 200
+  Exclude:
+    # Test classes get quite large, so exclude the test directory from having
+    # to adhere to this rule.
+    - "test/**/*.rb"
+
+Metrics/MethodLength:
+  Max: 30
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Style/AccessModifierDeclarations:
+  EnforcedStyle: inline
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: always
+
+Style/NumericPredicate:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+  # Offense count: 23
+
+Metrics/AbcSize:
+  Max: 51
+
+# Offense count: 12
+Metrics/CyclomaticComplexity:
+  Max: 15
+
+# Offense count: 6
+# Configuration parameters: CountKeywordArgs.
+Metrics/ParameterLists:
+  Max: 7
+
+# Offense count: 8
+Metrics/PerceivedComplexity:
+  Max: 17
+
+# Offense count: 86
+Style/Documentation:
+  Enabled: false
+
+Naming/PredicateName:
+  Enabled: true
+  AllowedMethods: has_many
