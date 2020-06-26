@@ -37,7 +37,7 @@ $ gem install pipedrive-connect
 
 ## Usage
 
-Congifure the library by initializing it with the **api key** you will find in your [setttings page at Pipedrive](https://<yourcompany>.pipedrive.com/settings/api).
+Configure the library by initializing it with the **api key** you can find in your [setttings page at Pipedrive](https://<yourcompany>.pipedrive.com/settings/api).
 
 ```ruby
 Pipedrive.api_key = "abc123"
@@ -55,7 +55,7 @@ Pipedrive.api_key = ENV["PIPEDRIVE_API_KEY"]
 
 ### Models
 
-Access your data at pipedrive via the models (for the complete list check out the directory `lib/pipedrive/resources`). You'll find that most of these classes are documented in the [API Reference](https://developers.pipedrive.com/docs/api/v1/).
+Access your data in pipedrive via the models (for the complete list check out the directory `lib/pipedrive/resources`). You'll find that most of these classes are documented in the [API Reference](https://developers.pipedrive.com/docs/api/v1/).
 
 For example to search, retrieve, access, create, update or delete an organization:
 
@@ -63,6 +63,7 @@ For example to search, retrieve, access, create, update or delete an organizatio
 # search for organizations with the term "Acme Inc" in any of their fields
 # return an array of Pipedrive::Organization instances
 orgs = Pipedrive::Organization.search("Acme Inc")
+
 # specify it is an exact match and reduce the scope to name and address
 orgs = Pipedrive::Organization.search(
   "Acme Inc",
@@ -80,7 +81,7 @@ orgs = Pipedrive::Organization.all(
 
 # if you know the id then retrieve the org
 acme = Pipedrive::Organization.retrieve(123)
-puts acme.name
+acme.name
 
 # get access to the activities, deals and persons of the org
 acme.activities
@@ -111,7 +112,7 @@ org = Pipedrive::Organization.create(
 )
 ```
 
-Yeah, we know what you are thinking, not convinient at all. Well, we definitely think the same, so we fixed by abstracting us (the devs) from having to know such key.
+Yeah, we know what you are thinking, not convinient at all. Well, we definitely think the same, so we fixed it by abstracting us (the devs) from having to know such key.
 
 So, using Pipedrive::Connect it is as it should always be:
 
@@ -124,22 +125,29 @@ org = Pipedrive::Organization.create(
 # By the way, in case you are curious and want to know what all the fields
 # within an Organization are, just call:
 org.fields
+
 # or, this works too
 Pipedrive::Organization.fields
 ```
 
 ## Development
 
+Run the set up:
+
+```sh
+$ bundle
+```
+
 Run the specs:
 
 ```sh
-$ rspec
+$ bundle exec rspec
 ```
 
 Run the linter:
 
 ```sh
-$ bundle exec rake rubocop
+$ bundle exec rubocop
 ```
 
 ## Contributing
