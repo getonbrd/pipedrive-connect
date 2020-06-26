@@ -37,7 +37,7 @@ $ gem install pipedrive-connect
 
 ## Usage
 
-Configure the library by initializing it with the **api key** you can find in your [setttings page at Pipedrive](https://<yourcompany>.pipedrive.com/settings/api).
+Configure the library by initializing it with the **api key** you can find in your [setttings page at Pipedrive](https://yourcompany.pipedrive.com/settings/api).
 
 ```ruby
 Pipedrive.api_key = "abc123"
@@ -152,7 +152,7 @@ $ bundle exec rubocop
 
 ## Contributing
 
-1. Fork it ( https://github.com/getonbrd/pipedrive/fork ).
+1. Fork it.
 1. Create your feature branch (git checkout -b my-new-feature).
 1. Commit your changes (git commit -am 'Add some feature').
 1. Push to the branch (git push origin my-new-feature).
