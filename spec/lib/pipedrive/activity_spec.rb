@@ -4,7 +4,7 @@ require "spec_helper"
 
 RSpec.describe Pipedrive::Activity, type: :resource do
   describe "#resources_url" do
-    it "set to activities" do
+    it "sets to activities" do
       expect(described_class.resources_url).to eq("activities")
     end
   end

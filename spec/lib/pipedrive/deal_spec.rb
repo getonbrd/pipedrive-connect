@@ -61,7 +61,7 @@ RSpec.describe Pipedrive::Deal, type: :resource do
     end
 
     context "missing or wrong params" do
-      it "raises error when wrong type product param is send" do
+      it "raises error when a product param of a wrong type is sent" do
         expect do
           subject.add_product("whatever", {})
         end.to raise_error(
