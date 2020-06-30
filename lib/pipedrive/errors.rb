@@ -2,7 +2,10 @@
 
 module Pipedrive
   class PipedriveError < StandardError
+    attr_reader :code
+
     def initialize(message = nil, code = nil)
+      super(message)
       @message = message
       @code = code
     end
