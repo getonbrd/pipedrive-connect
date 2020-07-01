@@ -158,8 +158,8 @@ $ bundle exec rubocop
 1. Push to the branch (git push origin my-new-feature).
 1. Create a new Pull Request.
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/getonbrd/pipedrive-connect. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/pipedrive-connect/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/getonbrd/pipedrive-connect. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/getonbrd/pipedrive-connect/blob/master/CODE_OF_CONDUCT.md).
 
 ## Code of Conduct
 
-Everyone interacting in the Pipedrive::Connect project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/pipedrive-connect/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Pipedrive::Connect project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/getonbrd/pipedrive-connect/blob/master/CODE_OF_CONDUCT.md).
