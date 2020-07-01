@@ -9,7 +9,8 @@ module Pipedrive
     # POST /deals/:id/products
     # Add a product to this deal
     def add_product(product, params)
-      raise "Param *product* is not an instance of Pipedrive::Product" unless product.is_a?(Pipedrive::Product)
+      raise "Param *product* is not an instance of Pipedrive::Product" \
+        unless product.is_a?(Pipedrive::Product)
       raise "Param :item_price is required" unless params.key?(:item_price)
       raise "Param :quantity is required" unless params.key?(:quantity)
 
@@ -18,7 +19,7 @@ module Pipedrive
         "#{resource_url}/products",
         params.merge(id: id, product_id: product.id)
       )
-      Pipedrive::Product.new(response.dig(:data))
+      Product.new(response.dig(:data))
     end
   end
 end

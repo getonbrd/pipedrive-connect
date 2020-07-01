@@ -9,4 +9,5 @@ group :development do
   gem "mocha"
   gem "rspec"
   gem "rubocop"
+  gem "simplecov", require: false
 end
