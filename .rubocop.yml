@@ -24,6 +24,22 @@ Metrics/MethodLength:
 Metrics/ModuleLength:
   Enabled: false
 
+Metrics/AbcSize:
+  Max: 51
+
+# Offense count: 12
+Metrics/CyclomaticComplexity:
+  Max: 15
+
+# Offense count: 6
+# Configuration parameters: CountKeywordArgs.
+Metrics/ParameterLists:
+  Max: 7
+
+# Offense count: 8
+Metrics/PerceivedComplexity:
+  Max: 17
+
 Style/AccessModifierDeclarations:
   EnforcedStyle: inline
 
@@ -43,22 +59,6 @@ Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: consistent_comma
   # Offense count: 23
 
-Metrics/AbcSize:
-  Max: 51
-
-# Offense count: 12
-Metrics/CyclomaticComplexity:
-  Max: 15
-
-# Offense count: 6
-# Configuration parameters: CountKeywordArgs.
-Metrics/ParameterLists:
-  Max: 7
-
-# Offense count: 8
-Metrics/PerceivedComplexity:
-  Max: 17
-
 # Offense count: 86
 Style/Documentation:
   Enabled: false
@@ -66,3 +66,6 @@ Style/Documentation:
 Naming/PredicateName:
   Enabled: true
   AllowedMethods: has_many
+
+Layout/LineLength:
+  Max: 90
