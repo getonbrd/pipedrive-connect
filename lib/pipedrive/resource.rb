@@ -68,9 +68,10 @@ module Pipedrive
         raise "You must specify the resource name and its class name " \
               "For example has_many :deals, class_name: 'Deal'"
       end
+      class_name = "::Pipedrive::#{class_name}" unless class_name.include?("Pipedrive")
       define_method(resource_name) do |params = {}|
         response = request(:get, "#{resource_url}/#{resource_name}", params)
-        response.dig(:data)&.map { |d| Kernel.const_get(class_name).new(d) }
+        response.dig(:data)&.map { |d| Object.const_get(class_name).new(d) }
       end
     end
 

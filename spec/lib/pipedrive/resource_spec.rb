@@ -16,6 +16,19 @@ RSpec.describe Pipedrive::Resourceable do
 
   before do
     allow(Faraday).to receive(:new).and_return(conn)
+    stubs.get("resourceableFields") do
+      [
+        200,
+        { "Content-Type": "application/json" },
+        {
+          success: true,
+          data: [{
+            key: "abcdefghijklmnopqrstuvwsyz",
+            name: "Domain",
+          }],
+        }.to_json,
+      ]
+    end
   end
 
   describe "#class_name" do
@@ -47,19 +60,6 @@ RSpec.describe Pipedrive::Resourceable do
   context "api_key set" do
     before do
       allow(Pipedrive).to receive(:api_key).and_return("abc123")
-      stubs.get("resourceableFields") do
-        [
-          200,
-          { "Content-Type": "application/json" },
-          {
-            success: true,
-            data: [{
-              key: "abcdefghijklmnopqrstuvwsyz",
-              name: "Domain",
-            }],
-          }.to_json,
-        ]
-      end
     end
 
     describe "#all" do
@@ -383,9 +383,12 @@ RSpec.describe Pipedrive::Resourceable do
     end
 
     context "correctly defined" do
+      module Pipedrive
+        class Whatever < Resource; end
+      end
       before do
         allow(Pipedrive).to receive(:api_key).and_return("abc123")
-        stubs.get("resourceables/1/whatever") do
+        stubs.get("resourceables/1/whatevers") do
           [
             200,
             { "Content-Type": "application/json" },
@@ -398,15 +401,14 @@ RSpec.describe Pipedrive::Resourceable do
             }.to_json,
           ]
         end
-        allow(Kernel).to receive(:const_get).with("Whatever").and_return(described_class)
       end
 
       subject { described_class.new(id: 1) }
 
       it "creates a new method" do
-        described_class.has_many(:whatever, class_name: "Whatever")
-        expect(subject).to respond_to(:whatever)
-        expect(subject.whatever.count).to be(1)
+        described_class.has_many(:whatevers, class_name: "Whatever")
+        expect(subject).to respond_to(:whatevers)
+        expect(subject.whatevers.count).to be(1)
       end
     end
   end
