@@ -7,5 +7,8 @@ RSpec.describe Pipedrive::Person, type: :resource do
     it "responds to fields" do
       expect(subject).to respond_to(:fields)
     end
+    it "responds to merge" do
+      expect(subject).to respond_to(:merge)
+    end
   end
 end

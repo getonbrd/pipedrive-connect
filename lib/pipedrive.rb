@@ -18,6 +18,7 @@ require "pipedrive/resource"
 require "pipedrive/errors"
 require "pipedrive/util"
 require "pipedrive/fields"
+require "pipedrive/merge"
 
 # Named API Resources
 require "pipedrive/resources"
