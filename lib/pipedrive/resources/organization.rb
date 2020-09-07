@@ -3,6 +3,7 @@
 module Pipedrive
   class Organization < Resource
     include Fields
+    include Merge
 
     has_many :activities, class_name: "Activity"
     has_many :deals, class_name: "Deal"

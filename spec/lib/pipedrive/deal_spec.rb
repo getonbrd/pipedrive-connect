@@ -17,6 +17,9 @@ RSpec.describe Pipedrive::Deal, type: :resource do
     it "responds to products" do
       expect(subject).to respond_to(:products)
     end
+    it "responds to merge" do
+      expect(subject).to respond_to(:merge)
+    end
   end
 
   describe "#add_product" do

@@ -3,6 +3,7 @@
 module Pipedrive
   class Deal < Resource
     include Fields
+    include Merge
 
     has_many :products, class_name: "Product"
 
