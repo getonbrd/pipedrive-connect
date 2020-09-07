@@ -50,7 +50,7 @@ RSpec.describe Pipedrive::Mergeable do
 
     context "valid" do
       subject { described_class.new(id: 1) }
-      it "merges the people" do
+      it "merges the resources" do
         m = subject.merge(with_id: 2)
         expect(m).to be_a(Pipedrive::Mergeable)
         expect(m.id).to be(1)
