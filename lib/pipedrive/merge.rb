@@ -7,7 +7,7 @@ module Pipedrive
 
       response = request(:put,
                          "#{resource_url}/merge",
-                         { merge_with_id: with_id })
+                         merge_with_id: with_id)
       self.class.new(response.dig(:data))
     end
   end
