@@ -4,6 +4,10 @@ This file contains all notable changes to this project.
 This project adheres to [Semantic Versioning](http://semver.org/).
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
+## [1.2.0] - 2021-06-05
+
+- Add Lead, LeadLabel, LeadLabel and Goal models.
+
 ## [1.1.0] - 2020-09-07
 
 - Add capability to merge organizations, people and deals. See [the doc here](https://developers.pipedrive.com/docs/api/v1/#!/Organizations/put_organizations_id_merge).
