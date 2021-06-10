@@ -68,10 +68,20 @@ module Pipedrive
         raise "You must specify the resource name and its class name " \
               "For example has_many :deals, class_name: 'Deal'"
       end
+      class_name_lower_case = class_name.downcase
+      # always include all the data of the resource
+      options = { "include_#{class_name_lower_case}_data": 1 }
+      # add namespace to class_name
       class_name = "::Pipedrive::#{class_name}" unless class_name.include?("Pipedrive")
-      define_method(resource_name) do |params = {}|
-        response = request(:get, "#{resource_url}/#{resource_name}", params)
-        response.dig(:data)&.map { |d| Object.const_get(class_name).new(d) }
+      define_method(resource_name) do
+        response = request(:get, "#{resource_url}/#{resource_name}", options)
+        response.dig(:data)&.map do |data|
+          class_name_as_sym = class_name_lower_case.to_sym
+          if data.key?(class_name_as_sym)
+            data = data.merge(data.delete(class_name_as_sym))
+          end
+          Object.const_get(class_name).new(data)
+        end
       end
     end
 
