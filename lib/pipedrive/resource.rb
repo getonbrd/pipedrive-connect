@@ -73,8 +73,10 @@ module Pipedrive
       options = { "include_#{class_name_lower_case}_data": 1 }
       # add namespace to class_name
       class_name = "::Pipedrive::#{class_name}" unless class_name.include?("Pipedrive")
-      define_method(resource_name) do
-        response = request(:get, "#{resource_url}/#{resource_name}", options)
+      define_method(resource_name) do |params = {}|
+        response = request(:get,
+                           "#{resource_url}/#{resource_name}",
+                           params.merge(options))
         response.dig(:data)&.map do |data|
           class_name_as_sym = class_name_lower_case.to_sym
           if data.key?(class_name_as_sym)
