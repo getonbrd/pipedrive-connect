@@ -27,7 +27,11 @@ module Pipedrive
           @api_client = Faraday.new(
             url: BASE_URL,
             headers: { 'Content-Type': "application/json" }
-          )
+          ) do |faraday|
+            if Pipedrive.debug_api
+              faraday.response :logger
+            end
+          end
         end
 
         protected def check_api_key!
