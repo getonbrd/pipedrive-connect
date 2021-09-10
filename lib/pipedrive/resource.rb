@@ -33,7 +33,7 @@ module Pipedrive
     end
 
     def self.search_for_fields(values)
-      return values unless values.is_a?(Hash) && fields_dicc.any?
+      return values unless values.is_a?(Hash) && fields_dicc&.any?
 
       values.reduce({}) do |new_hash, (k, v)|
         if inverted_fields_dicc[k]
