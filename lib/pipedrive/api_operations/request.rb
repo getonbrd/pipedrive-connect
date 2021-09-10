@@ -26,15 +26,17 @@ module Pipedrive
         def api_client
           @api_client = Faraday.new(
             url: BASE_URL,
-            headers: { 'Content-Type': "application/json" }
-          )
+            headers: { "Content-Type": "application/json" }
+          ) do |faraday|
+            faraday.response :logger if Pipedrive.debug_http
+          end
         end
 
         protected def check_api_key!
           return if Pipedrive.api_key
 
           raise AuthenticationError, "No API key provided. " \
-            "Set your API key using 'Pipedrive.api_key = <API-KEY>'"
+                                     "Set your API key using 'Pipedrive.api_key = <API-KEY>'"
         end
       end
 

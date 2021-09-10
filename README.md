@@ -130,6 +130,20 @@ org.fields
 Pipedrive::Organization.fields
 ```
 
+## Debuging
+
+Show basic debugging info:
+
+```ruby
+Pipedrive.debug = true
+```
+
+show extended HTTP traffic information:
+
+```ruby
+Pipedrive.debug_http = true
+```
+
 ## Development
 
 Run the set up:
