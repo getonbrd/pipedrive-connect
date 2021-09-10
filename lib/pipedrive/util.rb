@@ -19,7 +19,7 @@ module Pipedrive
     end
 
     def self.debug(message)
-      Pipedrive.logger&.debug(message)
+      Pipedrive.logger&.debug(message) if Pipedrive.debug
     end
   end
 end
