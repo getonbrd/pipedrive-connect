@@ -14,11 +14,14 @@ module Pipedrive
             unless %i[get post put delete].include?(method)
 
           Util.debug "#{name} #{method.upcase} #{url}"
-
           response = api_client.send(method) do |req|
             req.url url
-            req.params = params.merge(api_token: Pipedrive.api_key)
-            req.body = params.to_json if %i[post put].include?(method)
+            req.params = { api_token: Pipedrive.api_key }
+            if %i[post put].include?(method)
+              req.body = params.to_json
+            else
+              req.params.merge!(params)
+            end
           end
           Util.serialize_response(response)
         end
@@ -28,7 +31,10 @@ module Pipedrive
             url: BASE_URL,
             headers: { "Content-Type": "application/json" }
           ) do |faraday|
-            faraday.response :logger if Pipedrive.debug_http
+            if Pipedrive.debug_http
+              faraday.response :logger, Pipedrive.logger,
+                               bodies: Pipedrive.debug_http_body
+            end
           end
         end
 

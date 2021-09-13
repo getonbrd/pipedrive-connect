@@ -4,10 +4,14 @@ This file contains all notable changes to this project.
 This project adheres to [Semantic Versioning](http://semver.org/).
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
+## [1.2.4] - 2021-09-13
+
+- Add `Pipedrive.debug_http_body`for debugging the http payload
+- Fix bugs with `POST`/`PUT` endpoints
 ## [1.2.3] - 2021-09-10
 
-- Add `Pipeddrive.debug` so basic debug info is not displayed out of the box.
-- Add `Pipeddrive.debug_http` for debugging http traffic.
+- Add `Pipedrive.debug` so basic debug info is not displayed out of the box.
+- Add `Pipedrive.debug_http` for debugging http traffic.
 - Fix bug in some resources when no fields filtering was provided.
 
 ## [1.2.2] - 2021-05-11

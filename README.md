@@ -142,6 +142,9 @@ show extended HTTP traffic information:
 
 ```ruby
 Pipedrive.debug_http = true
+
+# and to also show the body payloads
+Pipedrive.debug_http_body = true
 ```
 
 ## Development
