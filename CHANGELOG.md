@@ -4,10 +4,15 @@ This file contains all notable changes to this project.
 This project adheres to [Semantic Versioning](http://semver.org/).
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
+## [1.2.5] - 2022-03-03
+
+- Add `deals` to `Person`
+
 ## [1.2.4] - 2021-09-13
 
 - Add `Pipedrive.debug_http_body`for debugging the http payload
 - Fix bugs with `POST`/`PUT` endpoints
+
 ## [1.2.3] - 2021-09-10
 
 - Add `Pipedrive.debug` so basic debug info is not displayed out of the box.
