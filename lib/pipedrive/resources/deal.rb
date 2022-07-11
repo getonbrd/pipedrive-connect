@@ -22,5 +22,12 @@ module Pipedrive
       )
       Product.new(response.dig(:data))
     end
+
+    # DELETE /deals/:id/products/:product_attachment_id
+    # Detach a product from this deal
+    def delete_attached_product(product_attachment_id)
+      response = request(:delete, "#{resource_url}/products/#{product_attachment_id}")
+      response[:success]
+    end
   end
 end
