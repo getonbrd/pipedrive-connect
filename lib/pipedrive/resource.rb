@@ -79,6 +79,7 @@ module Pipedrive
                            params.merge(options))
         response.dig(:data)&.map do |data|
           class_name_as_sym = class_name_lower_case.to_sym
+          data[:metadata] = data
           if data.key?(class_name_as_sym)
             data = data.merge(data.delete(class_name_as_sym))
           end

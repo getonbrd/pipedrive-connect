@@ -4,6 +4,11 @@ This file contains all notable changes to this project.
 This project adheres to [Semantic Versioning](http://semver.org/).
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
+## [1.2.6] - 2022-07-11
+
+- Add `delete_attached_product` method to `Deal`
+- Add metadata to `has_many` relations that store the returned _data_(API) without transformation, as it is.
+
 ## [1.2.5] - 2022-03-03
 
 - Add `deals` to `Person`
