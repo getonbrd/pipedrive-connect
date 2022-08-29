@@ -29,5 +29,5 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # dependencies
-  spec.add_dependency("faraday", "~> 1.3")
+  spec.add_dependency("faraday", "< 3")
 end
