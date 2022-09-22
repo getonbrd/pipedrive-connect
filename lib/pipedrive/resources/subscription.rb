@@ -13,8 +13,19 @@ module Pipedrive
       Subscription.new(response.dig(:data))
     end
 
+    # PUT /subscriptions/recurring/:id
+    # Updates a recurring subscription
+    def update_recurring(params = {})
+      response = request(
+        :put,
+        "#{self.class.resource_url}/recurring/#{id}",
+        params
+      )
+      Subscription.new(response.dig(:data))
+    end
+
     # PUT /subscriptions/recurring/:id/cancel
-    # Adds a recurring subscription
+    # Cancels a recurring subscription
     def cancel_recurring(params = {})
       response = request(
         :put,

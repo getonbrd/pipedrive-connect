@@ -42,6 +42,32 @@ RSpec.describe Pipedrive::Subscription, type: :resource do
     end
   end
 
+  describe "#update_recurring" do
+    subject { described_class.new(id: 1, name: "My Subscription") }
+    before do
+      stubs.put("subscriptions/recurring/#{subject.id}") do
+        [
+          200,
+          { "Content-Type": "application/json" },
+          {
+            success: true,
+            data: {
+              id: 1,
+              name: "Updated Subscription",
+            },
+          }.to_json,
+        ]
+      end
+    end
+
+    it "updates the subscriptions and returns the updated subscription object" do
+      sub = subject.update_recurring
+      expect(sub).to be_a(Pipedrive::Subscription)
+      expect(sub.id).to be(1)
+      expect(sub.name).to eq("Updated Subscription")
+    end
+  end
+
   describe "#cancel_recurring" do
     subject { described_class.new(id: 1) }
     before do
