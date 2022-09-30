@@ -6,7 +6,6 @@ module Pipedrive
     include Merge
 
     has_many :products, class_name: "Product"
-    has_many :subscriptions, class_name: "Subscription"
 
     # POST /deals/:id/products
     # Add a product to this deal
