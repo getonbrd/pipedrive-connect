@@ -4,6 +4,11 @@ This file contains all notable changes to this project.
 This project adheres to [Semantic Versioning](http://semver.org/).
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
+## [1.2.7] - 2022-09-23
+
+- Add `Subscription` resource with additional `create_recurring`, `update_recurring` and `cancel_recurring` methods.
+- Changed faraday dependency to allow more flexibility
+
 ## [1.2.6] - 2022-07-11
 
 - Add `delete_attached_product` method to `Deal`
