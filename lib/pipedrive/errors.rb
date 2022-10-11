@@ -64,8 +64,8 @@ module Pipedrive
       .fetch(:data, {})
       .inspect
       .concat(response.fetch(:additional_data, {}).inspect)
-    error_class = ERROR_CLASS_MAP[status.to_s]
 
+    error_class = ERROR_CLASS_MAP[status.to_s]
     raise error_class.new(message, status, error_data) if error_class
 
     raise UnkownAPIError.new(message, status, error_data)

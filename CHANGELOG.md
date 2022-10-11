@@ -4,6 +4,12 @@ This file contains all notable changes to this project.
 This project adheres to [Semantic Versioning](http://semver.org/).
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
+## [1.2.8] - 2022-10-11
+
+- Add the new resource `Pipedrive::OrganizationField`
+- Add activities (as a `has_many` relationship) to `Pipedrive::Person`
+- Provide better error information also maping the status code to a class according to https://pipedrive.readme.io/docs/core-api-concepts-http-status-codes (check lib/pipedrive/errors.rb)
+
 ## [1.2.7] - 2022-09-23
 
 - Add `Subscription` resource with additional `create_recurring`, `update_recurring` and `cancel_recurring` methods.
