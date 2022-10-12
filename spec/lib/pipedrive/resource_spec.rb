@@ -41,7 +41,7 @@ RSpec.describe Pipedrive::Resourceable do
     it "raises error if called the abstract method" do
       expect do
         Pipedrive::Resource.resource_url
-      end.to raise_error(NotImplementedError, /Pipedrive::Resource is an abstract class/)
+      end.to raise_error(Pipedrive::NotImplementedError, /Pipedrive::Resource is an abstract class/)
     end
   end
 

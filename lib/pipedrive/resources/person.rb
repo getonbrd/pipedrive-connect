@@ -6,5 +6,6 @@ module Pipedrive
     include Merge
     
     has_many :deals, class_name: "Deal"
+    has_many :activities, class_name: "Activity"
   end
 end
