@@ -41,6 +41,32 @@ RSpec.describe Pipedrive::Subscription, type: :resource do
       end
     end
   end
+  
+  describe "#find" do
+    deal_id = 2
+    before do
+      stubs.get("subscriptions/find/#{deal_id}") do
+        [
+          200,
+          { "Content-Type": "application/json" },
+          {
+            success: true,
+            data: {
+              id: 1,
+              deal_id: deal_id,
+            },
+          }.to_json,
+        ]
+      end
+    end
+
+    it "returns a subscription connected to the deal" do
+      p = described_class.find(deal_id)
+      expect(p).to be_a(Pipedrive::Subscription)
+      expect(p.id).to be(1)
+      expect(p.deal_id).to be(2)
+    end
+  end
 
   describe "#update_recurring" do
     subject { described_class.new(id: 1, name: "My Subscription") }
