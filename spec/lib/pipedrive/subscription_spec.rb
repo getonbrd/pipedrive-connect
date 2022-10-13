@@ -42,7 +42,7 @@ RSpec.describe Pipedrive::Subscription, type: :resource do
     end
   end
   
-  describe "#find" do
+  describe "#find_by_deal" do
     deal_id = 2
     before do
       stubs.get("subscriptions/find/#{deal_id}") do
@@ -61,7 +61,7 @@ RSpec.describe Pipedrive::Subscription, type: :resource do
     end
 
     it "returns a subscription connected to the deal" do
-      p = described_class.find(deal_id)
+      p = described_class.find_by_deal(deal_id)
       expect(p).to be_a(Pipedrive::Subscription)
       expect(p.id).to be(1)
       expect(p.deal_id).to be(2)
