@@ -12,6 +12,13 @@ module Pipedrive
       )
       Subscription.new(response.dig(:data))
     end
+    
+    # GET /subscriptions/find/:id
+    # Returns details of a recurring subscription by the deal ID
+    def self.find_by_deal(id)
+      response = request(:get,"#{resource_url}/find/#{id}")
+      new(response.dig(:data))
+    end
 
     # PUT /subscriptions/recurring/:id
     # Updates a recurring subscription

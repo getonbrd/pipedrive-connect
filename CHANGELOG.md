@@ -4,6 +4,9 @@ This file contains all notable changes to this project.
 This project adheres to [Semantic Versioning](http://semver.org/).
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
+## [1.2.9] - 2022-10-13
+- Add `find_by_deal` method to `Subscription`to allow finding of subscriptions by `deal_id`.
+
 ## [1.2.8] - 2022-10-11
 
 - Add the new resource `Pipedrive::OrganizationField`
