@@ -44,6 +44,8 @@ RSpec.describe Pipedrive::Subscription, type: :resource do
   
   describe "#find_by_deal" do
     deal_id = 2
+    deal_with_no_sub_id = 3
+        
     before do
       stubs.get("subscriptions/find/#{deal_id}") do
         [
@@ -58,6 +60,14 @@ RSpec.describe Pipedrive::Subscription, type: :resource do
           }.to_json,
         ]
       end
+      
+      stubs.get("subscriptions/find/#{deal_with_no_sub_id}") do
+        [
+          204,
+          { "Content-Type": "application/json" },
+          "",
+        ]
+      end
     end
 
     it "returns a subscription connected to the deal" do
@@ -65,6 +75,14 @@ RSpec.describe Pipedrive::Subscription, type: :resource do
       expect(p).to be_a(Pipedrive::Subscription)
       expect(p.id).to be(1)
       expect(p.deal_id).to be(2)
+    end
+    
+    it "raises an error if no subscription returned" do
+      expect do
+        p = described_class.find_by_deal(deal_with_no_sub_id)
+      end.to raise_error(
+        "No item returned"
+      )
     end
   end
 

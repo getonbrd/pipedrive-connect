@@ -23,6 +23,8 @@ module Pipedrive
               req.params.merge!(params)
             end
           end
+
+          raise "No item returned" if response.body.empty?
           Util.serialize_response(response)
         end
 
