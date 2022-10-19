@@ -116,7 +116,7 @@ module Pipedrive
       # init data
       @data = data
       # generate the methods
-      data.each_key do |k|
+      data&.each_key do |k|
         # it could be a custom field diccionary
         m, is_custom_field = klass.fields_dicc&.dig(k) &&
                              [klass.fields_dicc&.dig(k), true] ||
@@ -152,5 +152,10 @@ module Pipedrive
     protected def fetch_value(key, is_custom_field)
       @data[is_custom_field ? self.class.inverted_fields_dicc.dig(key) : key]
     end
+
+    def no_content?
+      @data.nil? || @data.empty?
+    end
+    alias empty? no_content?
   end
 end

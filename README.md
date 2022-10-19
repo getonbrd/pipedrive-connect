@@ -97,6 +97,20 @@ new_acme.update(name: "Acme the new Inc")
 new_acme.delete
 ```
 
+### 204 No Content responses
+
+Some endpoints of the API return the HTTP status code **204** which is still a success code returning no data (empty body). This could be confusing but probably has a rationale behind.
+
+For these cases a method `empty?` within the model responds `true`.
+
+For instance:
+
+```ruby
+subscription = Pipedrive::Subscription.find_by_deal(123)
+subscription.empty? # true
+subscription.no_content? # true - is an alias of empty?
+```
+
 ### Custom Fields
 
 Pipedrive gives you the chance to add additional data by creating custom fields that are not included by default. Deals, Persons, Organizations and Products can all contain custom fields.

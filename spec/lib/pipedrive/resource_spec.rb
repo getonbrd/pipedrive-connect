@@ -215,6 +215,23 @@ RSpec.describe Pipedrive::Resourceable do
           expect(subject.domain).to eq("example.com")
         end
       end
+
+      context "no content" do
+        before do
+          stubs.get("resourceables/1") do
+            [
+              204,
+              { 'Content-Type': "application/json" },
+            ]
+          end
+        end
+
+        subject { described_class.retrieve(1) }
+
+        it "returns an Resourceable instance" do
+          expect(subject.empty?).to be_truthy
+        end
+      end
     end
 
     describe "#refresh" do
