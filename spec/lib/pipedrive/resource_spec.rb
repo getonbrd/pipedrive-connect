@@ -228,7 +228,7 @@ RSpec.describe Pipedrive::Resourceable do
 
         subject { described_class.retrieve(1) }
 
-        it "returns an Resourceable instance" do
+        it "returns an Resourceable instance with no data" do
           expect(subject.empty?).to be_truthy
         end
       end
