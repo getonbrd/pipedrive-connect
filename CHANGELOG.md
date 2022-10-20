@@ -4,9 +4,10 @@ This file contains all notable changes to this project.
 This project adheres to [Semantic Versioning](http://semver.org/).
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
-## [1.2.10] - 2022-10-13
+## [1.2.10] - 2022-10-19
 
-- Implement empty? method on all the models when the response is No content (204 HTTP code)
+- Implement `empty?` (or `no_content?`) method on all the models when the response is No content (204 HTTP code)
+- Add option to treat 204 HTTP code (No Content) as 404 HTTP code (Not found)
 
 ## [1.2.9] - 2022-10-13
 

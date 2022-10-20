@@ -3,6 +3,10 @@
 module Pipedrive
   module Util
     def self.serialize_response(response, symbolize_names: true)
+      if Pipedrive.treat_no_content_as_not_found && response.status == 204
+        Pipedrive.raise_error(404, error: "HTTP 204 status code received. No content")
+      end
+
       if response.success?
         return {} if response.status == 204
 

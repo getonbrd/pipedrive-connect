@@ -27,7 +27,12 @@ module Pipedrive
   BASE_URL = "https://api.pipedrive.com/v1"
 
   class << self
-    attr_accessor :api_key, :logger, :debug, :debug_http, :debug_http_body
+    attr_accessor :api_key,
+                  :logger,
+                  :debug,
+                  :debug_http,
+                  :debug_http_body,
+                  :treat_no_content_as_not_found
   end
 
   @logger = Logger.new(STDOUT)

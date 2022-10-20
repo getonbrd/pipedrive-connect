@@ -106,9 +106,18 @@ For these cases a method `empty?` within the model responds `true`.
 For instance:
 
 ```ruby
+# Asuming the subscription is not found but still return with empty body
 subscription = Pipedrive::Subscription.find_by_deal(123)
 subscription.empty? # true
 subscription.no_content? # true - is an alias of empty?
+```
+
+In case you want to override that behavior treating **no content** as **not found**, there is an option for that:
+
+```ruby
+Pipedrive.treat_no_content_as_not_found = true
+# Will raise a instance of Pipedrive::NotFoundError if subscription
+subscription = Pipedrive::Subscription.find_by_deal(123)
 ```
 
 ### Custom Fields
