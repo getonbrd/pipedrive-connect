@@ -116,7 +116,7 @@ In case you want to override that behavior treating **no content** as **not foun
 
 ```ruby
 Pipedrive.treat_no_content_as_not_found = true
-# Will raise a instance of Pipedrive::NotFoundError if subscription
+# Will raise a instance of Pipedrive::NotFoundError if no content is returned
 subscription = Pipedrive::Subscription.find_by_deal(123)
 ```
 
