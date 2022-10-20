@@ -9,11 +9,12 @@ module Pipedrive
         Pipedrive.raise_error(404, error: "HTTP 204 status code received. No content")
       end
 
+      json_body = JSON.parse(response.body, symbolize_names: symbolize_names)
+
       if response.success?
-        JSON.parse(response.body, symbolize_names: symbolize_names)
+        json_body
       else
-        error_body = JSON.parse(response.body, symbolize_names: symbolize_names)
-        Pipedrive.raise_error(response.status, error_body)
+        Pipedrive.raise_error(response.status, json_body)
       end
     end
 
