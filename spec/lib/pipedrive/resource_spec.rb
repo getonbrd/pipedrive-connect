@@ -215,6 +215,35 @@ RSpec.describe Pipedrive::Resourceable do
           expect(subject.domain).to eq("example.com")
         end
       end
+
+      context "no content" do
+        before do
+          stubs.get("resourceables/1") do
+            [
+              204,
+              { 'Content-Type': "application/json" },
+            ]
+          end
+        end
+
+        subject { described_class.retrieve(1) }
+
+        it "returns an Resourceable instance with no data" do
+          expect(subject.empty?).to be_truthy
+        end
+
+        context "treat 204 as 404" do
+          before do
+            allow(Pipedrive).to receive(:treat_no_content_as_not_found).and_return(true)
+          end
+
+          it "raises 404 Not found error" do
+            expect do
+              described_class.retrieve(1)
+            end.to raise_error Pipedrive::NotFoundError
+          end
+        end
+      end
     end
 
     describe "#refresh" do
