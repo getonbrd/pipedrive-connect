@@ -2,7 +2,9 @@
 
 module Pipedrive
   class User < Resource
-    def self.search(term, search_by_email)
+    # GET /v1/users/find/
+    # Find users by their name or email
+    def self.find(term, search_by_email)
       params = { term: term }
       params = params.merge({ search_by_email: 1 }) if search_by_email
       response = request(
