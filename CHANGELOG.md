@@ -4,6 +4,10 @@ This file contains all notable changes to this project.
 This project adheres to [Semantic Versioning](http://semver.org/).
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
+## [1.2.11] - 2022-11-21
+
+- Added `find` method for user to work for the `find` endpoint of the Pipedrive API
+
 ## [1.2.10] - 2022-10-19
 
 - Implement `empty?` (or `no_content?`) method on all the models when the response is No content (204 HTTP code)
