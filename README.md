@@ -67,7 +67,7 @@ orgs = Pipedrive::Organization.search("Acme Inc")
 # specify it is an exact match and reduce the scope to name and address
 orgs = Pipedrive::Organization.search(
   "Acme Inc",
-  extact_match: true,
+  exact_match: true,
   fields: [:name, :address]
 )
 
