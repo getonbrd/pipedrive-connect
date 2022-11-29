@@ -64,11 +64,11 @@ For example to search, retrieve, access, create, update or delete an organizatio
 # return an array of Pipedrive::Organization instances
 orgs = Pipedrive::Organization.search("Acme Inc")
 
-# specify it is an exact match and reduce the scope to name and address
+# specify it is an exact match and reduce the scope to the fields name and address (CSV string)
 orgs = Pipedrive::Organization.search(
   "Acme Inc",
   exact_match: true,
-  fields: [:name, :address]
+  fields: [:name, :address].join(",")
 )
 
 # Want to paginate across all the organizations sorting them by name?

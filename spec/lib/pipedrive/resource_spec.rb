@@ -134,7 +134,7 @@ RSpec.describe Pipedrive::Resourceable do
           stubs.get("resourceables/search") do |_env|
             expect(env.params).to include(
               "term" => "Get on Board",
-              "fields" => %i[name address],
+              "fields" => %i[name address].join(","),
               "exact_match" => true
             )
             [
