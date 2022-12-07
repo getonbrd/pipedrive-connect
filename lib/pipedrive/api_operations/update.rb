@@ -5,7 +5,7 @@ module Pipedrive
     module Update
       def update(params)
         response = request(
-          :put,
+          update_method || :put,
           resource_url,
           search_for_fields(params)
         )
