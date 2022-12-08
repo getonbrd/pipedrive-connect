@@ -9,81 +9,85 @@ module Pipedrive
 
     class << self
       attr_accessor :resources_url
-    end
 
-    def self.class_name
-      name.split("::")[-1]
-    end
-
-    def self.resource_url
-      if self == Resource
-        raise NotImplementedError,
-              "Pipedrive::Resource is an abstract class. You should perform actions " \
-              "on its subclasses (Organization, Person, Deal, etc)"
+      def update_method(method_override=nil)
+        @update_method ||= method_override
       end
-      resources_url || "#{class_name.downcase}s"
-    end
 
-    def self.fields_dicc
-      @fields_dicc ||= fields[0] if respond_to? :fields
-    end
+      def class_name
+        name.split("::")[-1]
+      end
 
-    def self.inverted_fields_dicc
-      @inverted_fields_dicc ||= fields_dicc&.invert
-    end
+      def resource_url
+        if self == Resource
+          raise NotImplementedError,
+                "Pipedrive::Resource is an abstract class. You should perform actions " \
+                "on its subclasses (Organization, Person, Deal, etc)"
+        end
+        resources_url || "#{class_name.downcase}s"
+      end
 
-    def self.search_for_fields(values)
-      return values unless values.is_a?(Hash) && fields_dicc&.any?
+      def fields_dicc
+        @fields_dicc ||= fields[0] if respond_to? :fields
+      end
 
-      values.reduce({}) do |new_hash, (k, v)|
-        if inverted_fields_dicc[k]
-          new_hash.merge(inverted_fields_dicc[k] => v)
-        else
-          new_hash.merge(k => v)
+      def inverted_fields_dicc
+        @inverted_fields_dicc ||= fields_dicc&.invert
+      end
+
+      def search_for_fields(values)
+        return values unless values.is_a?(Hash) && fields_dicc&.any?
+
+        values.reduce({}) do |new_hash, (k, v)|
+          if inverted_fields_dicc[k]
+            new_hash.merge(inverted_fields_dicc[k] => v)
+          else
+            new_hash.merge(k => v)
+          end
         end
       end
-    end
 
-    def self.retrieve(id)
-      response = request(:get, "#{resource_url}/#{id}")
-      new(response.dig(:data))
-    end
-
-    def self.all(params = {})
-      response = request(:get, resource_url, params)
-      response.dig(:data)&.map { |d| new(d) }
-    end
-
-    def self.search(term, params = {})
-      response = request(
-        :get,
-        "#{resource_url}/search",
-        { term: term }.merge(params)
-      )
-      response.dig(:data, :items).map { |d| new(d.dig(:item)) }
-    end
-
-    def self.has_many(resource_name, class_name:)
-      unless resource_name && class_name
-        raise "You must specify the resource name and its class name " \
-              "For example has_many :deals, class_name: 'Deal'"
+      def retrieve(id)
+        response = request(:get, "#{resource_url}/#{id}")
+        new(response.dig(:data))
       end
-      class_name_lower_case = class_name.downcase
-      # always include all the data of the resource
-      options = { "include_#{class_name_lower_case}_data": 1 }
-      # add namespace to class_name
-      class_name = "::Pipedrive::#{class_name}" unless class_name.include?("Pipedrive")
-      define_method(resource_name) do |params = {}|
-        response = request(:get,
-                           "#{resource_url}/#{resource_name}",
-                           params.merge(options))
-        response.dig(:data)&.map do |data|
-          class_name_as_sym = class_name_lower_case.to_sym
-          data[:metadata] = data
-          if data.key?(class_name_as_sym)
-            data = data.merge(data.delete(class_name_as_sym))
+
+      def all(params = {})
+        response = request(:get, resource_url, params)
+        response.dig(:data)&.map { |d| new(d) }
+      end
+
+      def search(term, params = {})
+        response = request(
+          :get,
+          "#{resource_url}/search",
+          { term: term }.merge(params)
+        )
+        response.dig(:data, :items).map { |d| new(d.dig(:item)) }
+      end
+
+      def has_many(resource_name, class_name:)
+        unless resource_name && class_name
+          raise "You must specify the resource name and its class name " \
+                "For example has_many :deals, class_name: 'Deal'"
+        end
+        class_name_lower_case = class_name.downcase
+        # always include all the data of the resource
+        options = { "include_#{class_name_lower_case}_data": 1 }
+        # add namespace to class_name
+        class_name = "::Pipedrive::#{class_name}" unless class_name.include?("Pipedrive")
+        define_method(resource_name) do |params = {}|
+          response = request(:get,
+                            "#{resource_url}/#{resource_name}",
+                            params.merge(options))
+          response.dig(:data)&.map do |data|
+            class_name_as_sym = class_name_lower_case.to_sym
+            data[:metadata] = data
+            if data.key?(class_name_as_sym)
+              data = data.merge(data.delete(class_name_as_sym))
+            end
+            Object.const_get(class_name).new(data)
           end
-          Object.const_get(class_name).new(data)
         end
       end
     end
@@ -147,6 +151,10 @@ module Pipedrive
         end
       end
       self
+    end
+
+    def update_method
+      self.class.update_method
     end
 
     protected def fetch_value(key, is_custom_field)

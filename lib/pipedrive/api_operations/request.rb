@@ -11,13 +11,13 @@ module Pipedrive
         def request(method, url, params = {})
           check_api_key!
           raise "Not supported method" \
-            unless %i[get post put delete].include?(method)
+            unless %i[get post put patch delete].include?(method)
 
           Util.debug "#{name} #{method.upcase} #{url}"
           response = api_client.send(method) do |req|
             req.url url
             req.params = { api_token: Pipedrive.api_key }
-            if %i[post put].include?(method)
+            if %i[post put patch].include?(method)
               req.body = params.to_json
             else
               req.params.merge!(params)
