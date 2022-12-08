@@ -7,7 +7,7 @@ This change log follows the conventions of [keepachangelog.com](http://keepachan
 ## [1.2.12] - 2022-12-08
 
 - Add the capability to override the HTTP method used to update a resource
-- Update `Lead` resource to use _PATCH_ method (as according to the API doc)
+- Update `Lead` and `LeadLabel` resources to use _PATCH_ method (as according to the API doc)
 
 ## [1.2.11] - 2022-11-21
 
