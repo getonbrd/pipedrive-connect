@@ -4,6 +4,10 @@ This file contains all notable changes to this project.
 This project adheres to [Semantic Versioning](http://semver.org/).
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
+## [1.2.14] - 2023-01-31
+
+- Fields now paginate until fetching all the fields so the diccionary of custom fields is complete (checkout `lib/pipedrive/fields` for more info)
+
 ## [1.2.13] - 2022-12-08
 
 - Update `LeadLabel` resource to use _PATCH_ method (as according to the API doc)
