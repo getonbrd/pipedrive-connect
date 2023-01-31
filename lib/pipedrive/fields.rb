@@ -12,7 +12,19 @@ module Pipedrive
     module ClassMethods
       def fields
         url = fields_url || "#{class_name.downcase}Fields"
-        data = request(:get, url).dig(:data)
+
+        data = []
+        start = 0
+        request_more_fields = true
+
+        while request_more_fields
+          response = request(:get, url, start: start)
+          data.concat(response.dig(:data))
+          # Check wether there are more fields to bring
+          metadata = response.dig(:additional_data, :pagination)
+          request_more_fields = metadata&.fetch(:more_items_in_collection, false)
+          start = metadata[:next_start] if request_more_fields
+        end
         # return a hash prefilled with
         # the fields hash and name parameterized
         # and the original array of fields (schema)

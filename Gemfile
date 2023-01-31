@@ -7,6 +7,7 @@ gemspec
 group :development do
   gem "byebug"
   gem "mocha"
+  gem "pry"
   gem "rspec"
   gem "rubocop"
   gem "simplecov", require: false

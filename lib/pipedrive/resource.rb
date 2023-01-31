@@ -10,7 +10,7 @@ module Pipedrive
     class << self
       attr_accessor :resources_url
 
-      def update_method(method_override=nil)
+      def update_method(method_override = nil)
         @update_method ||= method_override
       end
 
@@ -78,8 +78,8 @@ module Pipedrive
         class_name = "::Pipedrive::#{class_name}" unless class_name.include?("Pipedrive")
         define_method(resource_name) do |params = {}|
           response = request(:get,
-                            "#{resource_url}/#{resource_name}",
-                            params.merge(options))
+                             "#{resource_url}/#{resource_name}",
+                             params.merge(options))
           response.dig(:data)&.map do |data|
             class_name_as_sym = class_name_lower_case.to_sym
             data[:metadata] = data
