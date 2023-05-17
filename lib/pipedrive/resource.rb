@@ -92,7 +92,7 @@ module Pipedrive
           end
         end
 
-        define_method("new_#{singular}") do |params|
+        define_method("add_#{singular}") do |params|
           response = request(
             :post,
             "#{resource_url}/#{resource_name}",
@@ -104,7 +104,8 @@ module Pipedrive
         define_method("delete_#{singular}") do |resource|
           raise "Param *resource* is not an instance of Pipedrive::Resource" \
             unless resource.is_a?(Pipedrive::Resource)
-          request(:delete, "#{resource_url}/#{resource_name}/#{resource.id}")
+          response = request(:delete, "#{resource_url}/#{resource_name}/#{resource.id}")
+          response[:success]
         end
       end
     end
