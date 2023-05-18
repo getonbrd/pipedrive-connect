@@ -63,34 +63,10 @@ RSpec.describe Pipedrive::Deal, type: :resource do
       end
     end
 
-    context "missing or wrong params" do
-      it "raises error when a product param of a wrong type is sent" do
-        expect do
-          subject.add_product("whatever", {})
-        end.to raise_error(
-          "Param *product* is not an instance of Pipedrive::Product"
-        )
-      end
-      it "raises error when item price is missing" do
-        expect do
-          subject.add_product(product, {})
-        end.to raise_error(
-          "Param :item_price is required"
-        )
-      end
-      it "raises error when quantity is missing" do
-        expect do
-          subject.add_product(product, { item_price: 1 })
-        end.to raise_error(
-          "Param :quantity is required"
-        )
-      end
-    end
-
     context "valid" do
       subject { described_class.new(id: 1) }
       it "adds the product and returns its instance" do
-        p = subject.add_product(product, item_price: 1, quantity: 1)
+        p = subject.add_product(product_id: product.id, item_price: 1, quantity: 1)
         expect(p).to be_a(Pipedrive::Product)
         expect(p.id).to be(1)
         expect(p.name).to eq("Product")
@@ -98,7 +74,7 @@ RSpec.describe Pipedrive::Deal, type: :resource do
     end
   end
 
-  describe "#delete_attached_product" do
+  describe "#delete_product" do
     subject { described_class.new(id: 1) }
     let(:product_attachment_id) { 1 }
     before do
@@ -118,7 +94,8 @@ RSpec.describe Pipedrive::Deal, type: :resource do
     end
 
     it "deletes the attached product and returns true" do
-      expect(subject.delete_attached_product(product_attachment_id)).to be_truthy
+      product = Pipedrive::Product.new(id: product_attachment_id)
+      expect(subject.delete_product(product)).to be_truthy
     end
   end
 end

@@ -66,12 +66,14 @@ module Pipedrive
         response.dig(:data, :items).map { |d| new(d.dig(:item)) }
       end
 
-      def has_many(resource_name, class_name:)
+      def has_many(resource_name, args = {})
+        class_name = args[:class_name]
         unless resource_name && class_name
           raise "You must specify the resource name and its class name " \
                 "For example has_many :deals, class_name: 'Deal'"
         end
         class_name_lower_case = class_name.downcase
+        singular = args[:singular] || class_name_lower_case[0..-1]
         # always include all the data of the resource
         options = { "include_#{class_name_lower_case}_data": 1 }
         # add namespace to class_name
@@ -88,6 +90,22 @@ module Pipedrive
             end
             Object.const_get(class_name).new(data)
           end
+        end
+
+        define_method("add_#{singular}") do |params|
+          response = request(
+            :post,
+            "#{resource_url}/#{resource_name}",
+            params.merge(id: id)
+          )
+          Object.const_get(class_name).new(response.dig(:data))
+        end
+
+        define_method("delete_#{singular}") do |resource|
+          raise "Param *resource* is not an instance of Pipedrive::Resource" \
+            unless resource.is_a?(Pipedrive::Resource)
+          response = request(:delete, "#{resource_url}/#{resource_name}/#{resource.id}")
+          response[:success]
         end
       end
     end

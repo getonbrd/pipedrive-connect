@@ -4,6 +4,13 @@ This file contains all notable changes to this project.
 This project adheres to [Semantic Versioning](http://semver.org/).
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
+## [1.3.0] - 2023-04-17
+
+- Modify `has_many` to generate methods to `add` and `delete` resources. ie. `add_participant`, `add_product`, `delete_product`
+- Add `Pipedrive::Participant` resource and add the association to `Pipedrive::Deal`
+- BREAKING CHANGE: Removed `delete_attached_product` in favor of `delete_product` passing a hash of params instead of an instance of `Pipedrive::Resource`
+- BREAKING CHANGE: `add_product` changed method signature because of the changes introduced in `has_many`
+
 ## [1.2.14] - 2023-01-31
 
 - The codebase paginates until fetching all the fields so the diccionary of custom fields is complete (checkout `lib/pipedrive/fields` for more info)
