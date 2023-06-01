@@ -97,6 +97,29 @@ new_acme.update(name: "Acme the new Inc")
 new_acme.delete
 ```
 
+### Has many methods
+
+```ruby
+deal = Pipedrive::Deal.retrieve 1
+person = Pipedrive::Person.retrieve 1
+product = Pipedrive::Product.retrieve 1
+
+# add a participant
+deal.add_participant(person_id: person.id)
+
+# attach a product to a deal returning the attachment data
+product_attachment =
+  deal.add_product(product_id: product.id,
+                   item_price: 99,
+                   quantity: 2,
+                   discount_percentage: 5)
+
+# detach a product from a deal
+# Note: product attachment is not the product per se
+# but the record that represent the attachment
+deal.delete_product(product_attachment.id)
+```
+
 ### 204 No Content responses
 
 Some endpoints of the API return the HTTP status code **204** which is still a success code returning no data (empty body). This could be confusing but probably has a rationale behind.

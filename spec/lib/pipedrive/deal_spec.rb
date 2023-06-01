@@ -77,6 +77,7 @@ RSpec.describe Pipedrive::Deal, type: :resource do
   describe "#delete_product" do
     subject { described_class.new(id: 1) }
     let(:product_attachment_id) { 1 }
+
     before do
       stubs.delete("deals/#{subject.id}/products/#{product_attachment_id}") do
         [
@@ -94,8 +95,7 @@ RSpec.describe Pipedrive::Deal, type: :resource do
     end
 
     it "deletes the attached product and returns true" do
-      product = Pipedrive::Product.new(id: product_attachment_id)
-      expect(subject.delete_product(product)).to be_truthy
+      expect(subject.delete_product(product_attachment_id)).to be_truthy
     end
   end
 end

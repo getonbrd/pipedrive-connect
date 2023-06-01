@@ -2,7 +2,12 @@
 
 This file contains all notable changes to this project.
 This project adheres to [Semantic Versioning](http://semver.org/).
+
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
+
+## [1.3.1] - 2023-06-01
+
+- **BREAKING change:**: Generated `delete_*` method has been refactored to receive the `id` of the record to be dettached or deleted - instead of the resource per se -, for instance: `deal.delete_product(attached_product_id)`. This is because the API behaves different depending on the endpoint, like in case of `#DELETE /deals/{id}/products/{product_attachment_id}` that receives an id corresponding to the attachment id (not a product, but a different record).
 
 ## [1.3.0] - 2023-04-17
 

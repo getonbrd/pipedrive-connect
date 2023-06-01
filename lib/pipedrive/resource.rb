@@ -73,7 +73,7 @@ module Pipedrive
                 "For example has_many :deals, class_name: 'Deal'"
         end
         class_name_lower_case = class_name.downcase
-        singular = args[:singular] || class_name_lower_case[0..-1]
+        singular = args[:singular] || class_name_lower_case
         # always include all the data of the resource
         options = { "include_#{class_name_lower_case}_data": 1 }
         # add namespace to class_name
@@ -82,14 +82,16 @@ module Pipedrive
           response = request(:get,
                              "#{resource_url}/#{resource_name}",
                              params.merge(options))
-          response.dig(:data)&.map do |data|
-            class_name_as_sym = class_name_lower_case.to_sym
-            data[:metadata] = data
-            if data.key?(class_name_as_sym)
-              data = data.merge(data.delete(class_name_as_sym))
+          response
+            .dig(:data)
+            &.map do |data|
+              class_name_as_sym = class_name_lower_case.to_sym
+              data[:metadata] = data
+              if data.key?(class_name_as_sym)
+                data = data.merge(data.delete(class_name_as_sym))
+              end
+              Object.const_get(class_name).new(data)
             end
-            Object.const_get(class_name).new(data)
-          end
         end
 
         define_method("add_#{singular}") do |params|
@@ -101,10 +103,8 @@ module Pipedrive
           Object.const_get(class_name).new(response.dig(:data))
         end
 
-        define_method("delete_#{singular}") do |resource|
-          raise "Param *resource* is not an instance of Pipedrive::Resource" \
-            unless resource.is_a?(Pipedrive::Resource)
-          response = request(:delete, "#{resource_url}/#{resource_name}/#{resource.id}")
+        define_method("delete_#{singular}") do |resource_id|
+          response = request(:delete, "#{resource_url}/#{resource_name}/#{resource_id}")
           response[:success]
         end
       end
