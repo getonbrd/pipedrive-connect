@@ -441,12 +441,11 @@ RSpec.describe Pipedrive::Resourceable do
       end
 
       context "creates the add and delete methods on the association" do
-        it "allows adding a resource" do
+        let(:attached_resource_id) { 99 }
+        before do
           stubs.post("resourceables/1/whatevers") do |env|
             req_body = JSON.parse(env.body, symbolize_names: true)
-            expect(req_body).to include(
-              name: "New resource",
-            )
+            expect(req_body).to include(name: "New resource")
             [
               200,
               { 'Content-Type': "application/json" },
@@ -459,14 +458,8 @@ RSpec.describe Pipedrive::Resourceable do
               }.to_json,
             ]
           end
-          described_class.has_many(:whatevers, class_name: "Whatever")
-          expect(subject).to respond_to(:add_whatever)
-          subject.add_whatever(name: "New resource")
-        end
 
-        it "allows to delete a resource" do
-          id = 99
-          stubs.delete("resourceables/1/whatevers/#{id}") do |env|
+          stubs.delete("resourceables/1/whatevers/#{attached_resource_id}") do
             [
               200,
               { 'Content-Type': "application/json" },
@@ -476,9 +469,18 @@ RSpec.describe Pipedrive::Resourceable do
               }.to_json,
             ]
           end
+        end
+
+        it "allows adding a resource" do
           described_class.has_many(:whatevers, class_name: "Whatever")
-          expect(subject).to respond_to(:delete_whatever)
-          subject.delete_whatever(described_class.new(id: id))
+          expect(subject).to respond_to(:add_whatever)
+
+          expect(subject.add_whatever(name: "New resource")).to be_truthy
+        end
+
+        it "allows to delete a resource" do
+          described_class.has_many(:whatevers, class_name: "Whatever")
+          expect(subject.delete_whatever(attached_resource_id)).to be_truthy
         end
       end
     end
