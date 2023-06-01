@@ -73,7 +73,7 @@ module Pipedrive
                 "For example has_many :deals, class_name: 'Deal'"
         end
         class_name_lower_case = class_name.downcase
-        singular = args[:singular] || class_name_lower_case[0..]
+        singular = args[:singular] || class_name_lower_case
         # always include all the data of the resource
         options = { "include_#{class_name_lower_case}_data": 1 }
         # add namespace to class_name
