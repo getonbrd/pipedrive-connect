@@ -116,7 +116,7 @@ product_attachment =
 
 # detach a product from a deal
 # Note: product attachment is not the product per se
-# but the record that represent the attachment
+# but the record that represents the attachment
 deal.delete_product(product_attachment.id)
 ```
 
