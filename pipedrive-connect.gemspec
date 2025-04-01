@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift(::File.join(::File.dirname(__FILE__), "lib"))
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "lib"))
 
 require "pipedrive/version"
 
@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.authors       = "Get on Board"
   spec.email         = "team@getonbrd.com"
 
-  spec.summary   = "Ruby binding for the pipedrive API."
+  spec.summary       = "Ruby binding for the pipedrive API."
   spec.homepage      = "https://github.com/getonbrd/pipedrive-connect"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
@@ -30,4 +30,5 @@ Gem::Specification.new do |spec|
 
   # dependencies
   spec.add_dependency("faraday", "< 3")
+  spec.metadata["rubygems_mfa_required"] = "true"
 end
