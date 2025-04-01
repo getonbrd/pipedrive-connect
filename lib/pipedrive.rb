@@ -24,7 +24,7 @@ require "pipedrive/merge"
 require "pipedrive/resources"
 
 module Pipedrive
-  BASE_URL = "https://api.pipedrive.com/api/v2"
+  BASE_URL = "https://api.pipedrive.com/api"
 
   class << self
     attr_accessor :api_key,
