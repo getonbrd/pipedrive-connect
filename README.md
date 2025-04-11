@@ -53,6 +53,40 @@ require 'pipedrive'
 Pipedrive.api_key = ENV["PIPEDRIVE_API_KEY"]
 ```
 
+### Pipedrive API versions
+
+Pipedrive has started adding new V2 endpoints to their API. You can change which API endpoint is accessed by setting up
+the dnpoint access on the configuration settings
+
+```ruby
+# by default set up to use V2 api endpoints
+irb(main):001:0> Pipedrive.api_version
+=> :v2
+
+# use only V1 api endpoints
+irb(main):005:0> Pipedrive.use_v1_api!
+=> :v1
+irb(main):006:0> Pipedrive.api_version
+=> :v1
+
+# change back to using V2 api endpoints
+irb(main):009:0> Pipedrive.use_v2_api!
+=> :v2
+irb(main):010:0> Pipedrive.api_version
+=> :v2
+```
+*Please note:* not all resources have V2 api endpoint. For these resources the V2 setting will be ignored and the
+V1 endpoints will always be used.
+
+```ruby
+irb(main):030:0> Pipedrive.use_v2_api!
+=> :v2
+irb(main):031:0> Pipedrive.api_version
+=> :v2
+irb(main):032:0> Pipedrive::Lead.api_version
+=> :v1
+```
+
 ### Models
 
 Access your data in pipedrive via the models (for the complete list check out the directory `lib/pipedrive/resources`). You'll find that most of these classes are documented in the [API Reference](https://developers.pipedrive.com/docs/api/v1/).
