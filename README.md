@@ -59,7 +59,7 @@ Pipedrive has started adding new V2 endpoints to their API. You can change which
 the enpoint access on the configuration settings
 
 ```ruby
-# by default set up to use V2 api endpoints
+# by default set up to use V2 api endpoints (as of version 2.0.0)
 irb(main):001:0> Pipedrive.api_version
 => :v2
 
