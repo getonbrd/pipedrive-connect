@@ -30,7 +30,8 @@ RSpec.describe Pipedrive::Activity, type: :resource do
   end
 
   describe "default v2 api version" do
-    it "returns v1 api version" do
+-    it "returns v1 api version" do
++    it "returns v2 api version" do
       expect(described_class.api_version).to eq(:v2)
     end
   end
