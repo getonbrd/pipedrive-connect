@@ -6,10 +6,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [2.0.0] - 2025-04-11
-- **BREAKING change:**: Minimium ruby version updated to 2.7.
+- **BREAKING change:**: Minimum ruby version updated to 2.7.
 - Added options for using new V2 api endpoints. Resource `Pipedrive::Activity` switched to new V2 endpoint.
 - Documentation updates with information on V1/V2 api endpoint switching.
-
 ## [1.3.1] - 2023-06-01
 
 - **BREAKING change:**: Generated `delete_*` method has been refactored to receive the `id` of the record to be dettached or deleted - instead of the resource per se -, for instance: `deal.delete_product(attached_product_id)`. This is because the API behaves different depending on the endpoint, like in case of `#DELETE /deals/{id}/products/{product_attachment_id}` that receives an id corresponding to the attachment id (not a product, but a different record).
