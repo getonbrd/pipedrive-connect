@@ -56,7 +56,7 @@ Pipedrive.api_key = ENV["PIPEDRIVE_API_KEY"]
 ### Pipedrive API versions
 
 Pipedrive has started adding new V2 endpoints to their API. You can change which API endpoint is accessed by setting up
-the dnpoint access on the configuration settings
+the enpoint access on the configuration settings
 
 ```ruby
 # by default set up to use V2 api endpoints
