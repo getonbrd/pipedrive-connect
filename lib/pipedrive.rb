@@ -33,7 +33,25 @@ module Pipedrive
                   :debug_http,
                   :debug_http_body,
                   :treat_no_content_as_not_found
+
+    attr_writer :faraday_adapter
+
+    def use_v2_api!
+      @api_version = :v2
+    end
+
+    def use_v1_api!
+      @api_version = :v1
+    end
+
+    def api_version
+      @api_version || :v2
+    end
+
+    def faraday_adapter
+      @faraday_adapter || :net_http
+    end
   end
 
-  @logger = Logger.new(STDOUT)
+  @logger = Logger.new($stdout)
 end

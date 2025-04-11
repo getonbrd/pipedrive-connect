@@ -8,8 +8,13 @@ module Pipedrive
       end
 
       module ClassMethods
+        def supports_v2_api?
+          # default setting, override in resources as required
+          false
+        end
+
         def api_version
-          "v1" # default api version
+          supports_v2_api? ? Pipedrive.api_version : :v1
         end
 
         def request(method, url, params = {})
@@ -39,8 +44,10 @@ module Pipedrive
           ) do |faraday|
             if Pipedrive.debug_http
               faraday.response :logger, Pipedrive.logger,
-                               bodies: Pipedrive.debug_http_body
+                               bodies:  Pipedrive.debug_http_body
             end
+
+            faraday.adapter Pipedrive.faraday_adapter
           end
         end
 

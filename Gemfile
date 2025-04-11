@@ -6,6 +6,7 @@ gemspec
 
 group :development do
   gem "byebug"
+  gem "faraday-net_http", require: true
   gem "mocha"
   gem "pry"
   gem "rspec"
