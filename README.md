@@ -87,6 +87,15 @@ irb(main):032:0> Pipedrive::Lead.api_version
 => :v1
 ```
 
+### Backwards Compatibility
+
+To maintain backwards compatibility, you can explicitly set the API version to V1 in your application's configuration:
+
+```ruby
+# Set to use V1 API endpoints for all resources
+Pipedrive.use_v1_api!
+```
+
 ### Models
 
 Access your data in pipedrive via the models (for the complete list check out the directory `lib/pipedrive/resources`). You'll find that most of these classes are documented in the [API Reference](https://developers.pipedrive.com/docs/api/v1/).
