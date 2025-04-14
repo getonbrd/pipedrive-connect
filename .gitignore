@@ -9,3 +9,4 @@
 /tmp/
 /Gemfile.lock
 .rvmrc
+.tool-versions

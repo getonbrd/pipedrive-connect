@@ -8,12 +8,22 @@ module Pipedrive
       end
 
       module ClassMethods
+        def supports_v2_api?
+          # default setting, override in resources as required
+          false
+        end
+
+        def api_version
+          supports_v2_api? ? Pipedrive.api_version : :v1
+        end
+
         def request(method, url, params = {})
           check_api_key!
           raise "Not supported method" \
             unless %i[get post put patch delete].include?(method)
 
           Util.debug "#{name} #{method.upcase} #{url}"
+
           response = api_client.send(method) do |req|
             req.url url
             req.params = { api_token: Pipedrive.api_key }
@@ -23,18 +33,21 @@ module Pipedrive
               req.params.merge!(params)
             end
           end
+
           Util.serialize_response(response)
         end
 
         def api_client
           @api_client = Faraday.new(
-            url: BASE_URL,
+            url: "#{BASE_URL}/#{api_version}",
             headers: { "Content-Type": "application/json" }
           ) do |faraday|
             if Pipedrive.debug_http
               faraday.response :logger, Pipedrive.logger,
-                               bodies: Pipedrive.debug_http_body
+                               bodies:  Pipedrive.debug_http_body
             end
+
+            faraday.adapter Pipedrive.faraday_adapter
           end
         end
 

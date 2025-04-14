@@ -14,4 +14,25 @@ RSpec.describe Pipedrive::Activity, type: :resource do
       expect(subject).to respond_to(:fields)
     end
   end
+
+  describe "v1 api version" do
+    before do
+      Pipedrive.use_v1_api!
+    end
+
+    after do
+      Pipedrive.use_v2_api!
+    end
+
+    it "returns v1 api version" do
+      expect(described_class.api_version).to eq(:v1)
+    end
+  end
+
+  describe "default v2 api version" do
+-    it "returns v1 api version" do
++    it "returns v2 api version" do
+      expect(described_class.api_version).to eq(:v2)
+    end
+  end
 end

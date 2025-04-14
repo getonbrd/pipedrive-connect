@@ -98,4 +98,14 @@ RSpec.describe Pipedrive::Deal, type: :resource do
       expect(subject.delete_product(product_attachment_id)).to be_truthy
     end
   end
+
+  describe "V2 api version" do
+    before do
+      Pipedrive.use_v2_api!
+    end
+
+    it "continues to use V1 endpoint" do
+      expect(described_class.api_version).to eq(:v1)
+    end
+  end
 end
