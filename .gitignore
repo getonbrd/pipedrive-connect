@@ -10,3 +10,4 @@
 /Gemfile.lock
 .rvmrc
 .tool-versions
+.byebug_history
