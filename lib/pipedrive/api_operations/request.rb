@@ -22,6 +22,10 @@ module Pipedrive
           "api/#{api_version}"
         end
 
+        def api_base_url
+          "#{BASE_URL}/#{api_version_prefix}"
+        end
+
         def request(method, url, params = {})
           check_api_key!
           raise "Not supported method" \
@@ -44,7 +48,7 @@ module Pipedrive
 
         def api_client
           @api_client = Faraday.new(
-            url: "#{BASE_URL}/#{api_version_prefix}/",
+            url: api_base_url,
             headers: { "Content-Type": "application/json" }
           ) do |faraday|
             if Pipedrive.debug_http

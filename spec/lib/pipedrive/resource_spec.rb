@@ -31,6 +31,28 @@ RSpec.describe Pipedrive::Resourceable do
     end
   end
 
+  describe "#api_base_url" do
+    context "when it supports v2 api" do
+      before do
+        allow(described_class).to receive(:supports_v2_api?).and_return(true)
+      end
+
+      it "returns v2 expected url" do
+        expect(described_class.api_base_url).to eq("https://api.pipedrive.com/api/v2")
+      end
+    end
+
+    context "when it does not support v2 api" do
+      before do
+        allow(described_class).to receive(:supports_v2_api?).and_return(false)
+      end
+
+      it "returns v1 expected url" do
+        expect(described_class.api_base_url).to eq("https://api.pipedrive.com/v1")
+      end
+    end
+  end
+
   describe "#class_name" do
     it "returns the name of the scoped class" do
       expect(described_class.class_name).to eq("Resourceable")

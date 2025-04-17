@@ -114,7 +114,7 @@ RSpec.describe Pipedrive do
       it "includes data and additional data into the error" do
         described_class.raise_error(1000, response)
       rescue StandardError => e
-        expect(e.data).to eq "\"Error data\"{:abc=>123}"
+        expect(e.data).to eq "\"Error data\"{abc: 123}"
       end
     end
   end
