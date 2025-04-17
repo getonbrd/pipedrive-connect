@@ -17,6 +17,11 @@ module Pipedrive
           supports_v2_api? ? Pipedrive.api_version : :v1
         end
 
+        def api_version_prefix
+          return api_version if api_version == :v1
+          "api/#{api_version}"
+        end
+
         def request(method, url, params = {})
           check_api_key!
           raise "Not supported method" \
@@ -39,7 +44,7 @@ module Pipedrive
 
         def api_client
           @api_client = Faraday.new(
-            url: "#{BASE_URL}/#{api_version}",
+            url: "#{BASE_URL}/#{api_version_prefix}/",
             headers: { "Content-Type": "application/json" }
           ) do |faraday|
             if Pipedrive.debug_http
