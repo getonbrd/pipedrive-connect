@@ -18,6 +18,7 @@ module Pipedrive
         end
 
         def api_version_prefix
+          # Version 1 endpoints don't use the '/api/' prefix
           return api_version if api_version == :v1
 
           "api/#{api_version}"
