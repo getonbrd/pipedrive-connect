@@ -61,9 +61,9 @@ module Pipedrive
 
     error_data =
       response
-      .fetch(:data, {})
-      .inspect
-      .concat(response.fetch(:additional_data, {}).inspect)
+        .fetch(:data, {})
+        .inspect
+        .concat(response.fetch(:additional_data, {}).inspect)
 
     error_class = ERROR_CLASS_MAP[status.to_s]
     raise error_class.new(message, status, error_data) if error_class

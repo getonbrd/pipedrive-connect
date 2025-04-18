@@ -1,3 +1,5 @@
+[![Run tests](https://github.com/getonbrd/pipedrive-connect/actions/workflows/ci.yml/badge.svg)](https://github.com/getonbrd/pipedrive-connect/actions/workflows/ci.yml)
+
 # Pipedrive API Ruby library
 
 Pipedrive::Connect provides a convenient access to the Pipedrive API from applications written in the Ruby language.
@@ -75,7 +77,8 @@ irb(main):009:0> Pipedrive.use_v2_api!
 irb(main):010:0> Pipedrive.api_version
 => :v2
 ```
-*Please note:* not all resources have V2 api endpoint. For these resources the V2 setting will be ignored and the
+
+_Please note:_ not all resources have V2 api endpoint. For these resources the V2 setting will be ignored and the
 V1 endpoints will always be used.
 
 ```ruby
