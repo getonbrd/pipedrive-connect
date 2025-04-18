@@ -19,6 +19,7 @@ module Pipedrive
 
         def api_version_prefix
           return api_version if api_version == :v1
+
           "api/#{api_version}"
         end
 
