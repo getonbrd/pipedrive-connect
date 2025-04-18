@@ -7,9 +7,8 @@ This change log follows the conventions of [keepachangelog.com](http://keepachan
 
 ## [2.0.1] - 2025-04-17
 
-- Fix bugs instroduced with version 2 where the base url for v1 was broken.
-- Add github actions
-
+- Fix bugs introduced with version 2 where the base URL for v1 was broken.
+- Add GitHub Actions workflow
 ## [2.0.0] - 2025-04-11
 
 - **BREAKING change**: Minimum ruby version updated to 2.7.
