@@ -61,17 +61,19 @@ module Pipedrive
 
       # Fields-specific request method that uses fields_api_version
       private def fields_request(method, url, params = {})
-        # Temporarily override the api_version for this request
-        original_version = @version
-        @version = @fields_version if @fields_version
+       # Fields-specific request method that uses fields_api_version
+       private def fields_request(method, url, params = {})
+         # Temporarily override the api_version for this request
+         original_version = @version
+         @version = @fields_version if @fields_version
 
-        result = request(method, url, params)
-
-        # Restore original version
-        @version = original_version
-
-        result
-      end
+         begin
+           request(method, url, params)
+         ensure
+           # Restore original version
+           @version = original_version
+         end
+       end
     end
 
     def fields
