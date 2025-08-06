@@ -5,6 +5,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
+## [2.1.0] - 2025-08-06
+
+### Added
+- New `use_fields_version` method in Fields module to override API version specifically for fields operations
+- Fields-specific version override functionality that allows resources to use different API versions for fields vs general operations
+- `fields_api_version` method to query the fields-specific API version
+
+### Changed
+- Activity resource now uses `use_fields_version :v1` instead of `use_version :v1` to override version only for fields operations
+- Activity general operations now use v2 API while fields operations continue to use v1 API as required by Pipedrive
+
 ## [2.0.1] - 2025-04-17
 
 - Fix bugs introduced with version 2 where the base URL for v1 was broken.

@@ -10,6 +10,24 @@ module Pipedrive
     end
 
     module ClassMethods
+      # Set version specifically for fields operations
+      def use_fields_version(version)
+        @fields_version = version
+      end
+
+      # override the default version with the one provided
+      def api_version
+        return @version if @version
+
+        # Fall back to original Request module logic if no version override
+        super
+      end
+
+      # Fields-specific API version
+      def fields_api_version
+        @fields_version || api_version
+      end
+
       def fields
         url = fields_url || "#{class_name.downcase}Fields"
 
@@ -18,7 +36,7 @@ module Pipedrive
         request_more_fields = true
 
         while request_more_fields
-          response = request(:get, url, start: start)
+          response = fields_request(:get, url, start: start)
           data.concat(response.dig(:data))
           # Check wether there are more fields to bring
           metadata = response.dig(:additional_data, :pagination)
@@ -39,6 +57,20 @@ module Pipedrive
           )
         end
         [dicc, data]
+      end
+
+      # Fields-specific request method that uses fields_api_version
+      private def fields_request(method, url, params = {})
+        # Temporarily override the api_version for this request
+        original_version = @version
+        @version = @fields_version if @fields_version
+
+        begin
+          request(method, url, params)
+        ensure
+          # Restore original version
+          @version = original_version
+        end
       end
     end
 
