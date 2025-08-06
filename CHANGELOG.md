@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
+## [2.1.1] - 2025-08-06
+- Add Deal, Organization, Person, Pipeline, Product, Stage and User to the list of resources that are available in version 2 of the API.
+
 ## [2.1.0] - 2025-08-06
 
 ### Added
