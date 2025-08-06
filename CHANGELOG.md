@@ -7,9 +7,9 @@ This change log follows the conventions of [keepachangelog.com](http://keepachan
 
 ## [2.1.1] - 2025-08-06
 
-### Added
-
+### Changed
 - Deal, Organization, Person, Pipeline, Product, Stage and User now support API **v2**.
+
 ## [2.1.0] - 2025-08-06
 
 ### Added
@@ -25,6 +25,7 @@ This change log follows the conventions of [keepachangelog.com](http://keepachan
 
 - Fix bugs introduced with version 2 where the base URL for v1 was broken.
 - Add GitHub Actions workflow
+
 ## [2.0.0] - 2025-04-11
 
 - **BREAKING change**: Minimum ruby version updated to 2.7.
