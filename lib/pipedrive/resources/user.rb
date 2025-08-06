@@ -18,5 +18,9 @@ module Pipedrive
 
       items.map { |d| new(d) }
     end
+
+    def self.supports_v2_api?
+      true
+    end
   end
 end
