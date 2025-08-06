@@ -20,11 +20,7 @@ module Pipedrive
         return @version if @version
 
         # Fall back to original Request module logic if no version override
-        if respond_to?(:supports_v2_api?)
-          supports_v2_api? ? Pipedrive.api_version : :v1
-        else
-          Pipedrive.api_version
-        end
+        super
       end
 
       # Fields-specific API version
@@ -63,10 +59,8 @@ module Pipedrive
         [dicc, data]
       end
 
-      private
-
       # Fields-specific request method that uses fields_api_version
-      def fields_request(method, url, params = {})
+      private def fields_request(method, url, params = {})
         # Temporarily override the api_version for this request
         original_version = @version
         @version = @fields_version if @fields_version
