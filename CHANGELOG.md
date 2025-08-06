@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
-## [2.1.0] - 2025-01-16
+## [2.1.0] - 2025-08-06
 
 ### Added
 - New `use_fields_version` method in Fields module to override API version specifically for fields operations
