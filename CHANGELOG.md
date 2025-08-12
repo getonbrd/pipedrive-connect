@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
+## [2.1.2] - 2025-08-12
+
+### Fixes
+- Rollback Deal to be back to version **v1**
+
 ## [2.1.1] - 2025-08-06
 
 ### Changed

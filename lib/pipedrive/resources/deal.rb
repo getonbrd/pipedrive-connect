@@ -13,7 +13,7 @@ module Pipedrive
     use_fields_version :v1
 
     def self.supports_v2_api?
-      true
+      false
     end
   end
 end
