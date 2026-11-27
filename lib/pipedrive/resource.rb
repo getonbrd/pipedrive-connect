@@ -115,6 +115,29 @@ module Pipedrive
       initialize_from_data(data)
     end
 
+    # The id is read straight from the data: the accessors below are defined on
+    # the class only when an instance is initialized, so an object loaded from
+    # a cache (Marshal) in a fresh process would otherwise have no #id.
+    def id
+      @data&.dig(:id) || @data&.dig("id")
+    end
+
+    # An object loaded from a cache (Marshal skips #initialize) may have no
+    # accessors yet: read attributes from the data instead. Loading makes no
+    # API request; a custom field's name is resolved through the fields
+    # dictionary only when it is read (conversion probes such as #to_ary and
+    # #respond_to? never fetch the dictionary).
+    def method_missing(name, *args, &block)
+      key = args.empty? && data_key_for(name, load_fields: !name.to_s.start_with?("to_"))
+      return super unless key
+
+      @data[key]
+    end
+
+    def respond_to_missing?(name, include_private = false)
+      !data_key_for(name, load_fields: false).nil? || super
+    end
+
     def resource_url
       "#{self.class.resource_url}/#{id}"
     end
@@ -144,7 +167,10 @@ module Pipedrive
                              [klass.fields_dicc&.dig(k), true] ||
                              [k, false]
 
-        if m == :method
+        if m == :id
+          # Resource#id reads both key forms; a generated getter would shadow it.
+          nil
+        elsif m == :method
           # Object#method is a built-in Ruby method that accepts a symbol
           # and returns the corresponding Method object. Because the API may
           # also use `method` as a field name, we check the arity of *args
@@ -177,6 +203,19 @@ module Pipedrive
 
     protected def fetch_value(key, is_custom_field)
       @data[is_custom_field ? self.class.inverted_fields_dicc.dig(key) : key]
+    end
+
+    private def data_key_for(name, load_fields:)
+      return nil unless @data.is_a?(Hash)
+
+      direct = [name, name.to_s].find { |key| @data.key?(key) }
+      return direct if direct
+
+      klass = self.class
+      return nil unless load_fields || klass.instance_variable_get(:@fields_dicc)
+
+      field_key = klass.inverted_fields_dicc&.dig(name.to_sym)
+      [field_key, field_key&.to_s].find { |key| key && @data.key?(key) }
     end
 
     def no_content?
