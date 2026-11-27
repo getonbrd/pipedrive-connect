@@ -8,6 +8,14 @@ module Pipedrive
   class CachedThing < Resource
     self.resources_url = "cachedthings"
   end
+
+  # Like Organization: has a fields dictionary, fetched from the API.
+  class CachedFieldThing < Resource
+    include Fields
+
+    self.resources_url = "cachedfieldthings"
+    self.fields_url = "cachedfieldthingFields"
+  end
 end
 
 RSpec.describe Pipedrive::Resource do
@@ -52,6 +60,45 @@ RSpec.describe Pipedrive::Resource do
 
     it "still raises NoMethodError for an attribute it does not have" do
       expect { cached.unknown_attribute }.to raise_error(NoMethodError)
+    end
+  end
+
+  describe "a cached object of a class with custom fields" do
+    def legacy(data)
+      Pipedrive::CachedFieldThing.allocate.tap do |thing|
+        thing.instance_variable_set(:@data, data)
+        thing.instance_variable_set(:@unsaved_data, {})
+      end
+    end
+
+    before { Pipedrive::CachedFieldThing.instance_variable_set(:@fields_dicc, nil) }
+
+    it "loads and reads its id without asking the API for fields" do
+      dumped = Marshal.dump(legacy(id: 9, abc123: "Gold"))
+
+      # No fields stub: a request would raise Faraday::Adapter::Test::Stubs::NotFound.
+      loaded = Marshal.load(dumped) # rubocop:disable Security/MarshalLoad -- our own dump, as Rails.cache does
+      expect(loaded.id).to eq(9)
+      expect(loaded).not_to respond_to(:account_tier)
+    end
+
+    it "reads a custom field by its name, fetching the fields dictionary then" do
+      stubs.get("cachedfieldthingFields") do
+        json_response([{ key: "abc123", name: "Account tier" }])
+      end
+
+      expect(legacy(id: 9, abc123: "Gold").account_tier).to eq("Gold")
+      stubs.verify_stubbed_calls
+    end
+  end
+
+  describe "#id with string and symbol keys" do
+    it "reads a string-keyed id after a symbol-keyed instance was built" do
+      Pipedrive::CachedThing.new(id: 1)
+      cached = Pipedrive::CachedThing.allocate
+      cached.instance_variable_set(:@data, { "id" => 7 })
+
+      expect(cached.id).to eq(7)
     end
   end
 
