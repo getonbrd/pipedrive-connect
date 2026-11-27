@@ -5,6 +5,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
+## [2.2.0] - 2026-11-27
+
+### Fixes
+- `#id` and attribute readers work on objects loaded from a cache (Marshal) in a
+  fresh process. Accessors are defined when an instance is initialized, which
+  Marshal skips, so `#update` failed with `NameError: undefined local variable or method 'id'`.
+- `#update` with no attributes returns without a request (Pipedrive answers it with a 400).
+- A non-JSON response body (an HTML error page) raises the error class for its
+  status, or the new `Pipedrive::InvalidResponseError`, instead of `JSON::ParserError`.
+
 ## [2.1.2] - 2025-08-12
 
 ### Fixes

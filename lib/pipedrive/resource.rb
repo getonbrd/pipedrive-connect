@@ -115,6 +115,35 @@ module Pipedrive
       initialize_from_data(data)
     end
 
+    # The id is read straight from the data: the accessors below are defined on
+    # the class only when an instance is initialized, so an object loaded from
+    # a cache (Marshal) in a fresh process would otherwise have no #id.
+    def id
+      @data&.dig(:id) || @data&.dig("id")
+    end
+
+    # Marshal skips #initialize. Rebuild the accessors when loading.
+    def marshal_dump
+      @data
+    end
+
+    def marshal_load(data)
+      @unsaved_data = {}
+      initialize_from_data(data)
+    end
+
+    # Objects marshaled by earlier versions are loaded without #marshal_load,
+    # so their accessors may be missing: read attributes from the data instead.
+    def method_missing(name, *args, &block)
+      return super unless args.empty? && data_key_for(name)
+
+      @data[data_key_for(name)]
+    end
+
+    def respond_to_missing?(name, include_private = false)
+      !data_key_for(name).nil? || super
+    end
+
     def resource_url
       "#{self.class.resource_url}/#{id}"
     end
@@ -177,6 +206,12 @@ module Pipedrive
 
     protected def fetch_value(key, is_custom_field)
       @data[is_custom_field ? self.class.inverted_fields_dicc.dig(key) : key]
+    end
+
+    private def data_key_for(name)
+      return nil unless @data.is_a?(Hash)
+
+      [name, name.to_s].find { |key| @data.key?(key) }
     end
 
     def no_content?

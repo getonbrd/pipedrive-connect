@@ -4,6 +4,9 @@ module Pipedrive
   module APIOperations
     module Update
       def update(params)
+        # Pipedrive answers an empty update with a 400: there is nothing to send.
+        return @data if params.nil? || params.empty?
+
         response = request(
           update_method || :put,
           resource_url,

@@ -34,6 +34,8 @@ module Pipedrive
   class NotImplementedError < PipedriveError; end
   class ServiceUnavailableError < PipedriveError; end
   class UnkownAPIError < PipedriveError; end
+  # The response body was not JSON (e.g. an HTML error page from a proxy).
+  class InvalidResponseError < PipedriveError; end
 
   ERROR_CLASS_MAP = {
     "400" => BadRequestError,
